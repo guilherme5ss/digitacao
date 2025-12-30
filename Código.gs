@@ -21,7 +21,7 @@ function doPost(e) {
     // Mapeia os dados recebidos para corresponderem à ordem das colunas
     // Se você tiver uma coluna chamada 'data', ele insere a data atual
     const nextRow = headers.map(function(header) {
-      if (header === 'data' || header === 'timestamp') {
+      if (header === 'Data' || header === 'timestamp') {
         return new Date();
       } else {
         // 'nome', 'email', 'mensagem' devem bater com o 'name' do HTML

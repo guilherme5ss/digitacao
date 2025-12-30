@@ -2,7 +2,7 @@
 
 Práticas de digitação.
 
-## Passos Críticos (Não pule estes)
+## Configuração: Passos Críticos (Não pule estes)
 ### Para que o código funcione, você precisa garantir duas coisas na sua Planilha Google:
 
 ### **1. Configuração Inicial:**
