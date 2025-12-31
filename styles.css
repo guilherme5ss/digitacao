@@ -69,3 +69,30 @@ textarea{
 .toggle-password:hover {
     color: #000;
 }
+
+.offline-box {
+    display: none; /* Escondido por padrão */
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    text-align: center;
+    color: #856404;
+}
+
+.btn-offline {
+    background-color: #6c757d; /* Cor cinza */
+    color: white;
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-offline:hover {
+    background-color: #5a6268;
+}

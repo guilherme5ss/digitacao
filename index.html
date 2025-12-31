@@ -1,13 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
     <script src="config.js"></script>
 </head>
-
 <body>
     <div class="container">
         <form name="form-login">
@@ -31,6 +29,13 @@
 
             <input type="submit" value="Entrar" id="bt-login">
 
+            <div id="offline-area" class="offline-box">
+                <p><strong>Sem conexão com o servidor.</strong></p>
+                <p style="font-size: 13px;">Deseja acessar o sistema em modo limitado?</p>
+                <p style="font-size: 12px;">Seu progresso não será salvo.</p>
+                <button type="button" class="btn-offline" onclick="entrarOffline()">Entrar Offline</button>
+            </div>
+
             <p style="margin-top:10px; font-size: 14px;">
                 Não tem conta? <a href="cadastro.html">Cadastre-se</a>
             </p>
@@ -44,34 +49,68 @@
             input.setAttribute('type', type);
         }
 
+        // Função para simular Timeout (se demorar mais de 5s, gera erro)
+        async function fetchWithTimeout(resource, options = {}) {
+            const { timeout = 5000 } = options; // 5 segundos padrão
+            
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            
+            const response = await fetch(resource, {
+                ...options,
+                signal: controller.signal  
+            });
+            clearTimeout(id);
+            return response;
+        }
+
         const formLogin = document.forms['form-login'];
+        const offlineArea = document.getElementById('offline-area');
 
         formLogin.addEventListener('submit', function (e) {
             e.preventDefault();
+            
+            // Esconde a caixa offline se ela estava aberta antes
+            offlineArea.style.display = 'none';
+            
             const botao = document.getElementById('bt-login');
-            botao.value = "Verificando...";
+            botao.value = "Conectando...";
             botao.disabled = true;
 
-            fetch(config.script_url, { method: 'POST', body: new FormData(formLogin) })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result === 'success') {
-                        localStorage.setItem('usuarioNome', data.username);
-                        window.location.href = "dashboard.html";
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro!', error);
-                    alert('Erro de conexão.');
-                })
-                .finally(() => {
-                    botao.value = "Entrar";
-                    botao.disabled = false;
-                });
+            // Usa a função com timeout de 5 segundos
+            fetchWithTimeout(config.script_url, { 
+                method: 'POST', 
+                body: new FormData(formLogin),
+                timeout: 5000 
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    // Login online com sucesso
+                    localStorage.setItem('usuarioNome', data.username);
+                    localStorage.removeItem('modoOffline'); // Garante que não está offline
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro de conexão:', error);
+                // AQUI É O PULO DO GATO: Se der erro, mostra a opção offline
+                offlineArea.style.display = 'block';
+            })
+            .finally(() => {
+                botao.value = "Entrar";
+                botao.disabled = false;
+            });
         });
+
+        // Função chamada ao clicar no botão cinza
+        function entrarOffline() {
+            localStorage.setItem('usuarioNome', 'Visitante Offline');
+            localStorage.setItem('modoOffline', 'true'); // Marca que está offline
+            window.location.href = "dashboard.html";
+        }
     </script>
 </body>
-
 </html>

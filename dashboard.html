@@ -4,35 +4,67 @@
     <meta charset="UTF-8">
     <title>Área Restrita</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Aviso visual de modo offline */
+        .badge-offline {
+            background-color: #ffc107;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: none; /* Escondido por padrão */
+        }
+    </style>
 </head>
 <body>
     <div class="container" style="text-align: center;">
+        
+        <span id="badge-offline" class="badge-offline">⚠️ MODO OFFLINE</span>
+
         <h2 id="welcome-msg">Bem-vindo!</h2>
-        <p>Você acessou o sistema com sucesso.</p>
+        
+        <div id="status-conn"></div>
         
         <hr>
         
         <div id="app-area" style="padding: 20px; background: #f4f4f4; margin-top: 20px;">
-            <p>... Conteúdo do sistema entrará aqui ...</p>
+            <p>Conteúdo do sistema...</p>
+            <button onclick="testeAcao()">Testar Ação</button>
         </div>
 
         <button onclick="logout()" style="margin-top: 20px; background: #cc0000; color: white; border: none; padding: 10px 20px; cursor: pointer;">Sair</button>
     </div>
 
     <script>
-        // Verifica quem está logado
         const usuario = localStorage.getItem('usuarioNome');
-        
+        const isOffline = localStorage.getItem('modoOffline') === 'true';
+
         if (!usuario) {
-            // Se não tiver usuário salvo, chuta de volta para o login
-            alert("Usuário logado!");
+            alert("Você precisa fazer login!");
             window.location.href = "index.html";
         } else {
             document.getElementById('welcome-msg').innerText = "Olá, " + usuario + "!";
+            
+            if (isOffline) {
+                // Ajustes visuais para modo offline
+                document.getElementById('badge-offline').style.display = 'inline-block';
+                document.getElementById('status-conn').innerHTML = "<p style='color:orange'>Algumas funções estão desativadas sem internet.</p>";
+            }
+        }
+
+        function testeAcao() {
+            if (isOffline) {
+                alert("Esta função não está disponível no modo Offline!");
+            } else {
+                alert("Executando ação conectada à planilha...");
+                // Aqui iria o código de fetch para salvar coisas
+            }
         }
 
         function logout() {
             localStorage.removeItem('usuarioNome');
+            localStorage.removeItem('modoOffline');
             window.location.href = "index.html";
         }
     </script>
