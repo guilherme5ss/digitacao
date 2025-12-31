@@ -1,24 +1,54 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Cadastro</title>
     <link rel="stylesheet" href="styles.css">
     <script src="config.js"></script>
 </head>
+
 <body>
     <div class="container">
         <form name="form-cadastro">
             <h4>Criar Conta</h4>
             <input type="hidden" name="action" value="cadastro">
 
-            <input type="text" name="nome" placeholder="Nome Completo" required>
-            <input type="text" name="cpf" placeholder="CPF" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="senha" placeholder="Crie uma Senha" required>
-            
+            <input type="text" name="nome" placeholder="Nome Completo *" required>
+
+            <input type="text" name="cpf" id="cpf" placeholder="CPF (Opcional)" maxlength="14"
+                oninput="mascaraCPF(this)">
+
+            <input type="email" name="email" placeholder="Email (Opcional)">
+
+            <div class="password-container">
+                <input type="password" name="senha" id="senha" placeholder="Crie uma Senha *" required>
+                <span class="toggle-password" onclick="togglePassword('senha')"><svg width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
+                            fill="currentColor" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 3C17.5915 3 22.2898 6.82432 23.6219 12C22.2898 17.1757 17.5915 21 12 21C6.40848 21 1.71018 17.1757 0.378052 12C1.71018 6.82432 6.40848 3 12 3ZM12 19C7.52443 19 3.73132 16.0581 2.45723 12C3.73132 7.94186 7.52443 5 12 5C16.4756 5 20.2687 7.94186 21.5428 12C20.2687 16.0581 16.4756 19 12 19Z"
+                            fill="currentColor" />
+                    </svg></span>
+            </div>
+
+            <div class="password-container" style="margin-top: 10px;">
+                <input type="password" id="confirma_senha" placeholder="Confirme a Senha *" required>
+                <span class="toggle-password" onclick="togglePassword('confirma_senha')"><svg width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
+                            fill="currentColor" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 3C17.5915 3 22.2898 6.82432 23.6219 12C22.2898 17.1757 17.5915 21 12 21C6.40848 21 1.71018 17.1757 0.378052 12C1.71018 6.82432 6.40848 3 12 3ZM12 19C7.52443 19 3.73132 16.0581 2.45723 12C3.73132 7.94186 7.52443 5 12 5C16.4756 5 20.2687 7.94186 21.5428 12C20.2687 16.0581 16.4756 19 12 19Z"
+                            fill="currentColor" />
+                    </svg></span>
+            </div>
+
             <input type="submit" value="Cadastrar" id="bt-cadastrar">
-            
+
             <p style="margin-top:10px; font-size: 14px;">
                 Já tem conta? <a href="index.html">Faça Login</a>
             </p>
@@ -26,10 +56,42 @@
     </div>
 
     <script>
+        // --- Função da Máscara de CPF ---
+        function mascaraCPF(i) {
+            let v = i.value;
+            if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
+                i.value = v.substring(0, v.length - 1);
+                return;
+            }
+            i.setAttribute("maxlength", "14");
+            v = v.replace(/\D/g, ""); // Remove tudo o que não é dígito
+            v = v.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca ponto entre o 3º e o 4º dígitos
+            v = v.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca ponto entre o 6º e o 7º dígitos
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Coloca hifem entre o 9º e o 10º dígitos
+            i.value = v;
+        }
+
+        // --- Função do Olhinho (Mostrar/Ocultar) ---
+        function togglePassword(fieldId) {
+            const input = document.getElementById(fieldId);
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+        }
+
+        // --- Envio do Formulário ---
         const formCadastro = document.forms['form-cadastro'];
 
         formCadastro.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            const senha = document.getElementById('senha').value;
+            const confirma = document.getElementById('confirma_senha').value;
+
+            if (senha !== confirma) {
+                alert("As senhas não coincidem!");
+                return;
+            }
+
             const botao = document.getElementById('bt-cadastrar');
             botao.value = "Salvando...";
             botao.disabled = true;
@@ -38,8 +100,9 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.result === 'success') {
-                        alert('Cadastro realizado com sucesso! Faça login.');
-                        window.location.href = "index.html"; // Redireciona para login
+                        // AQUI MOSTRAMOS O CÓDIGO GERADO
+                        alert('Cadastro realizado com sucesso!\n\nSEU CÓDIGO DE ACESSO É: ' + data.codigo + '\n\nGuarde este número para fazer login.');
+                        window.location.href = "index.html";
                     } else {
                         alert('Erro: ' + data.message);
                     }
@@ -55,4 +118,5 @@
         });
     </script>
 </body>
+
 </html>

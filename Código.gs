@@ -1,5 +1,5 @@
-const sheetName = "MAIN";
 const scriptProp = PropertiesService.getScriptProperties();
+const sheetName = "MAIN";
 
 function initialSetup () {
   const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
@@ -34,51 +34,69 @@ function doPost(e) {
   }
 }
 
-// --- Função para Salvar Novo Usuário ---
 function handleCadastro(sheet, e) {
-  // Verifica se o email já existe (opcional, mas recomendado)
-  const users = sheet.getDataRange().getValues();
-  // Ignora o cabeçalho e procura o email na coluna 3 (índice 3 -> D)
-  // Ajuste os índices conforme sua planilha: A=0, B=1, C=2, D=3 (Email), E=4 (Senha)
-  const emailExists = users.slice(1).some(row => row[3] == e.parameter.email);
+  // Gera o próximo Código (ID)
+  // Pega o valor da última linha na coluna 2 (B - Código). Se não tiver nada, começa do 1.
+  const lastRow = sheet.getLastRow();
+  let nextId = 1000; // Vamos começar do 1000 para ficar mais bonito, ou 1 se preferir
   
-  if (emailExists) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Email já cadastrado!' }))
+  if (lastRow > 1) {
+    const lastId = sheet.getRange(lastRow, 2).getValue(); 
+    if (!isNaN(lastId)) {
+      nextId = Number(lastId) + 1;
+    }
+  }
+
+  // Validações básicas (CPF e Email agora são opcionais, mas Nome e Senha não)
+  if (!e.parameter.nome || !e.parameter.senha) {
+     return ContentService
+      .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Nome e Senha são obrigatórios.' }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 
   const newRow = [
     new Date(),           // Data
+    nextId,               // Código (Auto-incremento)
     e.parameter.nome,     // Nome
-    e.parameter.cpf,      // CPF
+    "'"+e.parameter.cpf,  // CPF (com apóstrofo para forçar texto e manter zeros)
     e.parameter.email,    // Email
-    e.parameter.senha     // Senha (Nota: em produção real, use hash!)
+    e.parameter.senha     // Senha
   ];
 
   sheet.appendRow(newRow);
 
   return ContentService
-    .createTextOutput(JSON.stringify({ 'result': 'success', 'message': 'Cadastro realizado!' }))
+    .createTextOutput(JSON.stringify({ 
+        'result': 'success', 
+        'message': 'Cadastro realizado!', 
+        'codigo': nextId // Retorna o código para mostrar ao usuário
+    }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// --- Função para Verificar Login ---
 function handleLogin(sheet, e) {
-  const emailInput = e.parameter.email;
+  // O campo 'loginInput' vem do formulário (pode ser email, cpf ou codigo)
+  const loginInput = e.parameter.loginInput; 
   const passwordInput = e.parameter.senha;
   
   const data = sheet.getDataRange().getValues();
   let userFound = false;
   let userName = "";
 
-  // Loop para encontrar usuário (começa do 1 para pular cabeçalho)
+  // Loop começa do 1 (pula cabeçalho)
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    // Coluna 3 = Email, Coluna 4 = Senha
-    if (row[3] == emailInput && row[4] == passwordInput) {
+    // Índices: 0=Data, 1=Codigo, 2=Nome, 3=CPF, 4=Email, 5=Senha
+    const dbCodigo = String(row[1]);
+    const dbCpf = String(row[3]);
+    const dbEmail = String(row[4]);
+    const dbSenha = String(row[5]);
+
+    // Verifica se o loginInput bate com Código, CPF OU Email
+    // E se a senha bate
+    if ((loginInput == dbCodigo || loginInput == dbCpf || loginInput == dbEmail) && passwordInput == dbSenha) {
       userFound = true;
-      userName = row[1]; // Coluna 1 = Nome
+      userName = row[2]; // Nome
       break;
     }
   }
@@ -89,7 +107,7 @@ function handleLogin(sheet, e) {
       .setMimeType(ContentService.MimeType.JSON);
   } else {
      return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Email ou senha incorretos' }))
+      .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Dados de acesso incorretos.' }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }

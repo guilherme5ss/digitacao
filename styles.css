@@ -44,3 +44,28 @@ textarea{
     background-color: #333333;
 
 }
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Espaço para o ícone não ficar em cima do texto */
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    user-select: none; /* Impede seleção de texto ao clicar */
+}
+
+.toggle-password:hover {
+    color: #000;
+}
