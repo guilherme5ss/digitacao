@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <form name="form-cadastro">
+            <h4>Criar Conta</h4>
+            <input type="hidden" name="action" value="cadastro">
+
+            <input type="text" name="nome" placeholder="Nome Completo" required>
+            <input type="text" name="cpf" placeholder="CPF" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="senha" placeholder="Crie uma Senha" required>
+            
+            <input type="submit" value="Cadastrar" id="bt-cadastrar">
+            
+            <p style="margin-top:10px; font-size: 14px;">
+                Já tem conta? <a href="index.html">Faça Login</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        const formCadastro = document.forms['form-cadastro'];
+
+        formCadastro.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const botao = document.getElementById('bt-cadastrar');
+            botao.value = "Salvando...";
+            botao.disabled = true;
+
+            fetch(config.script_url, { method: 'POST', body: new FormData(formCadastro) })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        alert('Cadastro realizado com sucesso! Faça login.');
+                        window.location.href = "index.html"; // Redireciona para login
+                    } else {
+                        alert('Erro: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro!', error);
+                    alert('Erro de conexão.');
+                })
+                .finally(() => {
+                    botao.value = "Cadastrar";
+                    botao.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>

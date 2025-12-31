@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Área Restrita</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <h2 id="welcome-msg">Bem-vindo!</h2>
+        <p>Você acessou o sistema com sucesso.</p>
+        
+        <hr>
+        
+        <div id="app-area" style="padding: 20px; background: #f4f4f4; margin-top: 20px;">
+            <p>... Conteúdo do sistema entrará aqui ...</p>
+        </div>
+
+        <button onclick="logout()" style="margin-top: 20px; background: #cc0000; color: white; border: none; padding: 10px 20px; cursor: pointer;">Sair</button>
+    </div>
+
+    <script>
+        // Verifica quem está logado
+        const usuario = localStorage.getItem('usuarioNome');
+        
+        if (!usuario) {
+            // Se não tiver usuário salvo, chuta de volta para o login
+            alert("Usuário logado!");
+            window.location.href = "index.html";
+        } else {
+            document.getElementById('welcome-msg').innerText = "Olá, " + usuario + "!";
+        }
+
+        function logout() {
+            localStorage.removeItem('usuarioNome');
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
