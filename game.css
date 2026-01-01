@@ -1,0 +1,118 @@
+.game-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Courier New', monospace; /* Fonte monoespaçada é essencial */
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    background: #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.display-box {
+    font-size: 48px;
+    text-align: center;
+    margin: 20px 0;
+    min-height: 60px;
+    font-weight: bold;
+    color: #333;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 15px;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+}
+
+.input-box input.error {
+    background-color: #ffcccc;
+    border-color: #ff0000;
+}
+
+.input-box input.correct {
+    background-color: #ccffcc;
+    border-color: #00cc00;
+}
+
+/* Teclado Virtual */
+.keyboard {
+    margin-top: 30px;
+    background: #eee;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    user-select: none;
+}
+
+.key-row {
+    margin-bottom: 5px;
+}
+
+.key {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    background: #fff;
+    border: 1px solid #999;
+    border-radius: 4px;
+    line-height: 40px;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.key.space {
+    width: 200px;
+}
+
+.key.active {
+    background-color: #4CAF50; /* Cor da tecla que deve ser apertada */
+    color: white;
+    transform: translateY(2px);
+}
+
+.key.pressed {
+    background-color: #ccc; /* Feedback visual quando usuário aperta */
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 500px;
+}
+
+.btn-start, .btn-sair {
+    padding: 10px 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#btn-audio {
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+}

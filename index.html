@@ -89,7 +89,7 @@
                     // Login online com sucesso
                     localStorage.setItem('usuarioNome', data.username);
                     localStorage.removeItem('modoOffline'); // Garante que não está offline
-                    window.location.href = "dashboard.html";
+                    window.location.href = "aula.html";
                 } else {
                     alert(data.message);
                 }
@@ -109,7 +109,7 @@
         function entrarOffline() {
             localStorage.setItem('usuarioNome', 'Visitante Offline');
             localStorage.setItem('modoOffline', 'true'); // Marca que está offline
-            window.location.href = "dashboard.html";
+            window.location.href = "aula.html";
         }
     </script>
 </body>
