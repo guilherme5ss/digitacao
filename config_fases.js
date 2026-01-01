@@ -20,7 +20,7 @@ const configsFases = [
         tipo: 'tecla',
         titulo: "Prática Aleatória",
         instrucao: "Atenção redobrada. As letras aparecerão em ordem aleatória.",
-        conteudo: "qwertyuiop", 
+        conteudo: "qwertyuiop",
         aleatorio: true,
         metaPontos: 35,
         tempoLimite: null,

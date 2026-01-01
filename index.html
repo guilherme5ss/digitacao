@@ -1,11 +1,13 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
     <script src="config.js"></script>
 </head>
+
 <body>
     <div class="container">
         <form name="form-login">
@@ -52,13 +54,13 @@
         // Função para simular Timeout (se demorar mais de 5s, gera erro)
         async function fetchWithTimeout(resource, options = {}) {
             const { timeout = 5000 } = options; // 5 segundos padrão
-            
+
             const controller = new AbortController();
             const id = setTimeout(() => controller.abort(), timeout);
-            
+
             const response = await fetch(resource, {
                 ...options,
-                signal: controller.signal  
+                signal: controller.signal
             });
             clearTimeout(id);
             return response;
@@ -69,40 +71,40 @@
 
         formLogin.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             // Esconde a caixa offline se ela estava aberta antes
             offlineArea.style.display = 'none';
-            
+
             const botao = document.getElementById('bt-login');
             botao.value = "Conectando...";
             botao.disabled = true;
 
             // Usa a função com timeout de 5 segundos
-            fetchWithTimeout(config.script_url, { 
-                method: 'POST', 
+            fetchWithTimeout(config.script_url, {
+                method: 'POST',
                 body: new FormData(formLogin),
-                timeout: 5000 
+                timeout: 5000
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === 'success') {
-                    // Login online com sucesso
-                    localStorage.setItem('usuarioNome', data.username);
-                    localStorage.removeItem('modoOffline'); // Garante que não está offline
-                    window.location.href = "aula.html";
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erro de conexão:', error);
-                // AQUI É O PULO DO GATO: Se der erro, mostra a opção offline
-                offlineArea.style.display = 'block';
-            })
-            .finally(() => {
-                botao.value = "Entrar";
-                botao.disabled = false;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        localStorage.setItem('usuarioNome', data.username);
+                        localStorage.setItem('usuarioCodigo', data.codigo); // <--- Adicione isso
+                        localStorage.setItem('nivelDigita', data.fase);     // <--- E isso (sincroniza progresso)
+                        window.location.href = "dashboard.html"; // ou direto para aula.html
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro de conexão:', error);
+                    // AQUI É O PULO DO GATO: Se der erro, mostra a opção offline
+                    offlineArea.style.display = 'block';
+                })
+                .finally(() => {
+                    botao.value = "Entrar";
+                    botao.disabled = false;
+                });
         });
 
         // Função chamada ao clicar no botão cinza
@@ -113,4 +115,5 @@
         }
     </script>
 </body>
+
 </html>

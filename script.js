@@ -3,7 +3,7 @@ const dados_login = document.forms['login-info'];
 
 dados_login.addEventListener('submit', function (e) {
     e.preventDefault();
-    
+
     // Feedback visual que está enviando (opcional)
     const botao = document.getElementById('enviar');
     botao.value = "Enviando...";
@@ -13,10 +13,10 @@ dados_login.addEventListener('submit', function (e) {
         .then(response => {
             // Verifica se o fetch funcionou tecnicamente
             if (response.ok) {
-                 alert('Dados enviados com sucesso!');
-                 dados_login.reset();
+                alert('Dados enviados com sucesso!');
+                dados_login.reset();
             } else {
-                 throw new Error('Erro na resposta do servidor');
+                throw new Error('Erro na resposta do servidor');
             }
         })
         .catch(error => {

@@ -38,7 +38,7 @@ function bloquearColagem() {
 
 function carregarFase() {
     configAtual = configsFases[nivelAtualIndex];
-    
+
     // Reseta variaveis
     pontos = 0;
     erros = 0;
@@ -74,7 +74,7 @@ function iniciarJogo() {
     modalEl.style.display = 'none';
     inputEl.disabled = false;
     inputEl.focus();
-    
+
     prepararNovoItem();
 
     if (configAtual.tempoLimite) {
@@ -91,7 +91,7 @@ function iniciarJogo() {
 function prepararNovoItem() {
     inputEl.value = "";
     inputBuffer = "";
-    
+
     // Lógica para pegar conteúdo
     let conteudo = configAtual.conteudo; // Pode ser string ou array
 
@@ -113,7 +113,7 @@ function prepararNovoItem() {
         // Sorteia uma palavra da lista
         const index = Math.floor(Math.random() * conteudo.length);
         itemAtual = conteudo[index];
-        
+
         if (configAtual.tipo === 'audio') {
             alvoEl.innerText = "🔊 ???";
             btnAudio.style.display = 'inline-block';
@@ -137,7 +137,7 @@ inputEl.addEventListener('keydown', (e) => {
         e.preventDefault();
         return;
     }
-    
+
     // Modo TECLA (caractere único)
     if (configAtual.tipo === 'tecla') {
         e.preventDefault(); // Impede o caractere de aparecer no input (controle manual)
@@ -159,7 +159,7 @@ function verificarTeclaUnica(keyPressionada) {
         document.getElementById('pontos').innerText = pontos;
         inputEl.classList.add('correct');
         setTimeout(() => inputEl.classList.remove('correct'), 200);
-        
+
         checarVitoria();
         prepararNovoItem();
     } else {
@@ -169,12 +169,12 @@ function verificarTeclaUnica(keyPressionada) {
 
 function verificarPalavra(valorDigitado) {
     const ultimoChar = valorDigitado.slice(-1);
-    
+
     // Verifica se digitou a tecla final (Espaço ou Enter)
     if (ultimoChar === configAtual.teclaFinal || (configAtual.teclaFinal === 'Enter' && valorDigitado.includes('\n'))) {
-        
+
         const palavraLimpa = valorDigitado.trim(); // Remove espaços extras
-        
+
         if (palavraLimpa === itemAtual) {
             pontos++;
             document.getElementById('pontos').innerText = pontos;
@@ -212,13 +212,13 @@ function checarVitoria() {
 function finalizarFase(sucesso, mensagem) {
     clearInterval(intervaloTempo);
     inputEl.disabled = true;
-    
+
     if (sucesso) {
         alert(mensagem);
         // Salva progresso
         nivelAtualIndex++;
         localStorage.setItem('nivelDigita', nivelAtualIndex);
-        
+
         if (nivelAtualIndex < configsFases.length) {
             carregarFase(); // Vai para próxima
         } else {
@@ -236,13 +236,13 @@ function finalizarFase(sucesso, mensagem) {
 function destacarTecla(char) {
     // Remove destaque anterior
     document.querySelectorAll('.key').forEach(k => k.classList.remove('active'));
-    
+
     // Busca tecla no HTML (data-key)
     // Converte para minúscula para achar no HTML, mas a lógica JS mantém case sensitive
     const keyEl = document.querySelector(`.key[data-key="${char.toLowerCase()}"]`);
     if (keyEl) {
         keyEl.classList.add('active');
-        
+
         // Sugerir dedo (lógica simples baseada em layout QWERTY padrão)
         const dedos = {
             'q': 'Mindinho Esq', 'a': 'Mindinho Esq', 'z': 'Mindinho Esq',
@@ -275,7 +275,7 @@ function gerarBotoesAjuda() {
     const container = document.getElementById('botoes-especiais');
     container.innerHTML = "";
     const chars = ['á', 'à', 'â', 'ã', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç', '?'];
-    
+
     chars.forEach(c => {
         const btn = document.createElement('button');
         btn.innerText = c;

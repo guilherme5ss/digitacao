@@ -1,38 +1,44 @@
-*{ 
-box-sizing: border-box;
-padding: 0;
-margin: 0;
-font-family: 'poppins', sans-serif;
-font-size: 18px;
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'poppins', sans-serif;
+    font-size: 18px;
 }
-body{
+
+body {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.container{
+
+.container {
     width: 500px;
     padding: 30px;
     border: 1px solid #eeeeee;
     border-radius: 10px;
     background-color: #000000;
 }
-h4{
+
+h4 {
     margin-bottom: 10px;
     font-size: 24px;
     color: white;
 }
-input{
+
+input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
 }
-textarea{
+
+textarea {
     width: 100%;
     padding: 10px;
 }
-#enviar{
+
+#enviar {
     border: none;
     background-color: yellow;
     color: black;
@@ -40,10 +46,12 @@ textarea{
     margin-top: 10px;
     border-radius: 5px;
 }
-#enviar:hover{
+
+#enviar:hover {
     background-color: #333333;
 
 }
+
 .password-container {
     position: relative;
     width: 100%;
@@ -51,7 +59,8 @@ textarea{
 
 .password-container input {
     width: 100%;
-    padding-right: 40px; /* Espaço para o ícone não ficar em cima do texto */
+    padding-right: 40px;
+    /* Espaço para o ícone não ficar em cima do texto */
     box-sizing: border-box;
 }
 
@@ -63,7 +72,8 @@ textarea{
     cursor: pointer;
     font-size: 18px;
     color: #666;
-    user-select: none; /* Impede seleção de texto ao clicar */
+    user-select: none;
+    /* Impede seleção de texto ao clicar */
 }
 
 .toggle-password:hover {
@@ -71,7 +81,8 @@ textarea{
 }
 
 .offline-box {
-    display: none; /* Escondido por padrão */
+    display: none;
+    /* Escondido por padrão */
     margin-top: 15px;
     padding: 15px;
     background-color: #fff3cd;
@@ -82,7 +93,8 @@ textarea{
 }
 
 .btn-offline {
-    background-color: #6c757d; /* Cor cinza */
+    background-color: #6c757d;
+    /* Cor cinza */
     color: white;
     margin-top: 10px;
     width: 100%;
