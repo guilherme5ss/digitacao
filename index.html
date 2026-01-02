@@ -80,26 +80,47 @@
             botao.disabled = true;
 
             // Usa a função com timeout de 5 segundos
-            fetchWithTimeout(config.script_url, {
-                method: 'POST',
-                body: new FormData(formLogin),
-                timeout: 5000
-            })
+            fetch(config.script_url, { method: 'POST', body: new FormData(formLogin) })
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Resposta do Servidor:", data); // VEJA ISSO NO CONSOLE
+
                     if (data.result === 'success') {
+                        // 1. Salva dados básicos
                         localStorage.setItem('usuarioNome', data.username);
-                        localStorage.setItem('usuarioCodigo', data.codigo); // <--- Adicione isso
-                        localStorage.setItem('nivelDigita', data.fase);     // <--- E isso (sincroniza progresso)
-                        window.location.href = "aula.html"; // ou direto para aula.html
+                        localStorage.setItem('usuarioCodigo', data.codigo);
+
+                        // 2. Lógica Robusta de Nível
+                        let nivelServidor = parseInt(data.nivel);
+                        let nivelLocal = parseInt(localStorage.getItem('nivelDigita'));
+
+                        // Se for NaN (Not a Number), transforma em 0
+                        if (isNaN(nivelServidor)) nivelServidor = 0;
+                        if (isNaN(nivelLocal)) nivelLocal = 0;
+
+                        console.log(`Comparando -> Servidor: ${nivelServidor} | Local: ${nivelLocal}`);
+
+                        // Usa o maior valor encontrado
+                        const maiorNivel = Math.max(nivelLocal, nivelServidor);
+
+                        // Força o salvamento como string
+                        localStorage.setItem('nivelDigita', maiorNivel.toString());
+                        console.log("Nível final salvo no navegador:", maiorNivel);
+
+                        localStorage.removeItem('modoOffline');
+
+                        // Pequeno delay para garantir que o storage salvou antes de mudar de página
+                        setTimeout(() => {
+                            window.location.href = "aula.html";
+                        }, 100);
+
                     } else {
                         alert(data.message);
                     }
                 })
                 .catch(error => {
                     console.error('Erro de conexão:', error);
-                    // AQUI É O PULO DO GATO: Se der erro, mostra a opção offline
-                    offlineArea.style.display = 'block';
+                    document.getElementById('offline-area').style.display = 'block';
                 })
                 .finally(() => {
                     botao.value = "Entrar";

@@ -18,12 +18,28 @@ const btnAudio = document.getElementById('btn-audio');
 document.addEventListener('DOMContentLoaded', () => {
     // Carrega progresso salvo
     const progressoSalvo = localStorage.getItem('nivelDigita');
-    if (progressoSalvo) {
+    console.log("Game.js leu do localStorage:", progressoSalvo); // Debug
+
+    if (progressoSalvo !== null && progressoSalvo !== undefined && progressoSalvo !== "") {
         nivelAtualIndex = parseInt(progressoSalvo);
-        // Proteção caso mude o config_fases e o índice não exista mais
-        if (nivelAtualIndex >= configsFases.length) nivelAtualIndex = 0;
+        
+        // Se der NaN por algum motivo, volta para 0
+        if (isNaN(nivelAtualIndex)) {
+            console.warn("Nível salvo inválido, resetando para 0");
+            nivelAtualIndex = 0;
+        }
+    } else {
+        // Se não tem nada salvo, começa do 0
+        nivelAtualIndex = 0;
     }
 
+    // Proteção de array (caso o usuário tenha nível 100 mas só existam 43 fases)
+    if (nivelAtualIndex >= configsFases.length) {
+        nivelAtualIndex = configsFases.length - 1; // Coloca na última fase disponível
+    }
+
+    console.log("Nível final carregado no jogo:", nivelAtualIndex);
+    
     carregarFase();
     bloquearColagem();
 });
@@ -215,19 +231,25 @@ function finalizarFase(sucesso, mensagem) {
 
     if (sucesso) {
         alert(mensagem);
-        // Salva progresso
+
+        // Atualiza índice
         nivelAtualIndex++;
+
+        // 1. Salva Local
         localStorage.setItem('nivelDigita', nivelAtualIndex);
 
+        // 2. Tenta Salvar no Servidor (NOVO)
+        salvarProgressoServidor(nivelAtualIndex);
+
         if (nivelAtualIndex < configsFases.length) {
-            carregarFase(); // Vai para próxima
+            carregarFase();
         } else {
             alert("VOCÊ ZEROU O CURSO! PARABÉNS!");
             sairAula();
         }
     } else {
         alert("FALHA: " + mensagem + "\nTente novamente.");
-        carregarFase(); // Reinicia mesma fase
+        carregarFase();
     }
 }
 
@@ -297,6 +319,38 @@ function atualizarRelogio() {
     const min = Math.floor(tempoRestante / 60);
     const sec = tempoRestante % 60;
     document.getElementById('tempo').innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
+function salvarProgressoServidor(novoNivel) {
+    const codigoUsuario = localStorage.getItem('usuarioCodigo');
+    const isOffline = localStorage.getItem('modoOffline') === 'true';
+
+    // Se estiver offline ou não tiver código de usuário, salva apenas local
+    if (isOffline || !codigoUsuario) {
+        console.log("Progresso salvo apenas localmente (Offline ou Visitante).");
+        return;
+    }
+
+    // Prepara dados para envio
+    const formData = new FormData();
+    formData.append('action', 'salvarProgresso');
+    formData.append('codigo', codigoUsuario);
+    formData.append('nivel', novoNivel);
+
+    // Envia silenciosamente (sem travar o jogo)
+    fetch(config.script_url, { // Certifique-se que config.script_url está acessível aqui (inclua config.js no html antes do game.js)
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result === 'success') {
+                console.log("Progresso sincronizado com a nuvem.");
+            } else {
+                console.warn("Erro ao salvar na nuvem:", data.message);
+            }
+        })
+        .catch(err => console.error("Erro de conexão ao salvar:", err));
 }
 
 function sairAula() {

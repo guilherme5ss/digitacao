@@ -21,6 +21,8 @@ function doPost(e) {
       return handleCadastro(sheet, e);
     } else if (action === 'login') {
       return handleLogin(sheet, e);
+    } else if (action === 'salvarProgresso') {
+      return handleSalvarProgresso(sheet, e);
     } else {
       throw new Error("Ação desconhecida");
     }
@@ -38,7 +40,7 @@ function handleCadastro(sheet, e) {
   // Gera o próximo Código (ID)
   // Pega o valor da última linha na coluna 2 (B - Código). Se não tiver nada, começa do 1.
   const lastRow = sheet.getLastRow();
-  let nextId = 1000; // Vamos começar do 1000 para ficar mais bonito, ou 1 se preferir
+  let nextId = 1000; 
   
   if (lastRow > 1) {
     const lastId = sheet.getRange(lastRow, 2).getValue(); 
@@ -49,18 +51,17 @@ function handleCadastro(sheet, e) {
 
   // Validações básicas (CPF e Email agora são opcionais, mas Nome e Senha não)
   if (!e.parameter.nome || !e.parameter.senha) {
-     return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Nome e Senha são obrigatórios.' }))
-      .setMimeType(ContentService.MimeType.JSON);
+     return ContentService.createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Nome e Senha obrigatórios.' })).setMimeType(ContentService.MimeType.JSON);
   }
 
   const newRow = [
-    new Date(),           // Data
-    nextId,               // Código (Auto-incremento)
-    e.parameter.nome,     // Nome
-    "'"+e.parameter.cpf,  // CPF (com apóstrofo para forçar texto e manter zeros)
-    e.parameter.email,    // Email
-    e.parameter.senha     // Senha
+    new Date(),           
+    nextId,               
+    e.parameter.nome,     
+    "'"+e.parameter.cpf,  
+    e.parameter.email,    
+    e.parameter.senha,
+    0 // <--- Nível Inicial (Começa na fase 0/1)
   ];
 
   sheet.appendRow(newRow);
@@ -69,7 +70,7 @@ function handleCadastro(sheet, e) {
     .createTextOutput(JSON.stringify({ 
         'result': 'success', 
         'message': 'Cadastro realizado!', 
-        'codigo': nextId // Retorna o código para mostrar ao usuário
+        'codigo': nextId 
     }))
     .setMimeType(ContentService.MimeType.JSON);
 }
@@ -81,9 +82,8 @@ function handleLogin(sheet, e) {
   
   const data = sheet.getDataRange().getValues();
   let userFound = false;
-  let userName = "";
+  let userData = {};
 
-  // Loop começa do 1 (pula cabeçalho)
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
     // Índices: 0=Data, 1=Codigo, 2=Nome, 3=CPF, 4=Email, 5=Senha
@@ -96,18 +96,47 @@ function handleLogin(sheet, e) {
     // E se a senha bate
     if ((loginInput == dbCodigo || loginInput == dbCpf || loginInput == dbEmail) && passwordInput == dbSenha) {
       userFound = true;
-      userName = row[2]; // Nome
+      userData = {
+        username: row[2], // Nome
+        codigo: row[1],   // ID do usuario (importante para salvar depois)
+        nivel: row[6]     // Nivel salvo na planilha
+      };
       break;
     }
   }
 
   if (userFound) {
      return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'success', 'username': userName }))
+      .createTextOutput(JSON.stringify({ 'result': 'success', ...userData }))
       .setMimeType(ContentService.MimeType.JSON);
   } else {
      return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Dados de acesso incorretos.' }))
+      .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Dados incorretos.' }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+// --- NOVA FUNÇÃO: Atualizar Progresso ---
+function handleSalvarProgresso(sheet, e) {
+  const usuarioCodigo = e.parameter.codigo;
+  const novoNivel = e.parameter.nivel;
+
+  const data = sheet.getDataRange().getValues();
+  
+  // Procura o usuário pelo código (Coluna B -> indice 1)
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][1]) === String(usuarioCodigo)) {
+      // Atualiza a coluna G (Nivel) -> indice 6. A linha é i + 1 na planilha.
+      // Coluna G é a 7ª coluna.
+      sheet.getRange(i + 1, 7).setValue(novoNivel);
+      
+      return ContentService
+        .createTextOutput(JSON.stringify({ 'result': 'success', 'message': 'Progresso salvo.' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ 'result': 'error', 'message': 'Usuário não encontrado.' }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
