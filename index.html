@@ -91,7 +91,7 @@
                         localStorage.setItem('usuarioCodigo', data.codigo);
 
                         // 2. Lógica Robusta de Nível
-                        let nivelServidor = parseInt(data.nivel);
+                        let nivelServidor = parseInt(data.nivel-1);
                         let nivelLocal = parseInt(localStorage.getItem('nivelDigita'));
 
                         // Se for NaN (Not a Number), transforma em 0
@@ -100,9 +100,9 @@
 
                         console.log(`Comparando -> Servidor: ${nivelServidor} | Local: ${nivelLocal}`);
 
-                        // Usa o maior valor encontrado
-                        const maiorNivel = Math.max(nivelLocal, nivelServidor);
-
+                        //const maiorNivel = Math.max(nivelLocal, nivelServidor); // Usa o maior valor encontrado
+                        const maiorNivel = nivelServidor // Prioriza o nível do servidor sempre
+                        
                         // Força o salvamento como string
                         localStorage.setItem('nivelDigita', maiorNivel.toString());
                         console.log("Nível final salvo no navegador:", maiorNivel);

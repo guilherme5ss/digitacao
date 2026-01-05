@@ -73,7 +73,7 @@ function carregarFase() {
 
     // Configura Modal
     document.getElementById('titulo-fase').innerText = configAtual.titulo;
-    document.getElementById('texto-instrucao').innerText = configAtual.instrucao;
+    document.getElementById('texto-instrucao').innerHTML = configAtual.instrucao;
     modalEl.style.display = 'flex';
 
     // Configura Botões de Ajuda (Seção 3)
@@ -335,7 +335,7 @@ function salvarProgressoServidor(novoNivel) {
     const formData = new FormData();
     formData.append('action', 'salvarProgresso');
     formData.append('codigo', codigoUsuario);
-    formData.append('nivel', novoNivel);
+    formData.append('nivel', novoNivel+1);
 
     // Envia silenciosamente (sem travar o jogo)
     fetch(config.script_url, { // Certifique-se que config.script_url está acessível aqui (inclua config.js no html antes do game.js)

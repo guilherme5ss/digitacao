@@ -13,6 +13,18 @@ const configsFases = [
         permitirBackspace: false,
         maxErros: 100
     },
+    {
+        id: 2,
+        tipo: 'tecla', // 'tecla', 'palavra', 'audio'
+        titulo: "Seção 1-2: Introdução às Teclas",
+        instrucao: "<span style='color:blue'>teste</span>",
+        conteudo: "çlkjh", // Caracteres usados nesta fase
+        aleatorio: false, // Se false, segue a ordem da string 'conteudo'. Se true, sorteia.
+        metaPontos: 35,
+        tempoLimite: null, // null = sem tempo
+        permitirBackspace: false,
+        maxErros: 100
+    },
     // ... (Crie as fases intermediárias aqui) ...
     // Exemplo Fase 15: Aleatório
     {
@@ -45,7 +57,7 @@ const configsFases = [
         tipo: 'palavra',
         titulo: "Seção 2: Palavras Inteiras",
         instrucao: "Digite a palavra exibida e pressione ESPAÇO. Não é possível apagar erros ainda.",
-        conteudo: ["casa", "dado", "faca", "gato"], // Lista de palavras
+        conteudo: ["casa"], // Lista de palavras
         metaPontos: 35, // Tem que acertar 35 palavras
         tempoLimite: 360, // 6 minutos em segundos
         permitirBackspace: false,
@@ -55,14 +67,14 @@ const configsFases = [
     {
         id: 20,
         tipo: 'palavra',
-        titulo: "Uso do Enter",
-        instrucao: "Digite a palavra e pressione ENTER para quebrar a linha.",
-        conteudo: ["linha1", "textocorrido", "paragrafo"],
+        titulo: "Pontuação",
+        instrucao: "Digite a palavra, agora com pntuação.",
+        conteudo: ["moço."],
         metaPontos: 35,
         tempoLimite: 360,
         permitirBackspace: true, // Agora pode apagar
         maxErros: 40,
-        teclaFinal: "Enter" // Exige Enter no final
+        teclaFinal: " " // Exige Enter no final
     },
 
     // --- SEÇÃO 3: ACENTOS (Fases 30-40) ---
