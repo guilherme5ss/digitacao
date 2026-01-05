@@ -5,7 +5,7 @@ const configsFases = [
         id: 1,
         tipo: 'tecla', // 'tecla', 'palavra', 'audio'
         titulo: "Seção 1: Introdução às Teclas",
-        instrucao: "Posicione seus dedos na linha base (ASDF JKLÇ). Digite a letra destacada.",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'><p>Digite a letra destacada. Essa aula você vai focar usar a mão esquerda.</p>",
         conteudo: "asdfg", // Caracteres usados nesta fase
         aleatorio: false, // Se false, segue a ordem da string 'conteudo'. Se true, sorteia.
         metaPontos: 35,
@@ -15,10 +15,10 @@ const configsFases = [
     },
     {
         id: 2,
-        tipo: 'tecla', // 'tecla', 'palavra', 'audio'
+        tipo: 'tecla',
         titulo: "Seção 1-2: Introdução às Teclas",
-        instrucao: "<span style='color:blue'>teste</span>",
-        conteudo: "çlkjh", // Caracteres usados nesta fase
+        instrucao: "<p>Agora com a mão direita.</p>",
+        conteudo: "çlkjh",
         aleatorio: false, // Se false, segue a ordem da string 'conteudo'. Se true, sorteia.
         metaPontos: 35,
         tempoLimite: null, // null = sem tempo
