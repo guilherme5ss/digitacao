@@ -1,10 +1,9 @@
 const configsFases = [
     // --- SEÇÃO 1: TECLAS (Fases 1-16) ---
-    // Exemplo Fase 1: Teclas Home Row
     {
         id: 1,
         tipo: 'tecla', // 'tecla', 'palavra', 'audio'
-        titulo: "Seção 1: Introdução às Teclas",
+        titulo: "<p>Aula 1</p><p>Seção 1: Introdução às Teclas</p>",
         instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'><p>Digite a letra destacada. Essa aula você vai focar usar a mão esquerda.</p>",
         conteudo: "asdfg", // Caracteres usados nesta fase
         aleatorio: false, // Se false, segue a ordem da string 'conteudo'. Se true, sorteia.
@@ -16,74 +15,347 @@ const configsFases = [
     {
         id: 2,
         tipo: 'tecla',
-        titulo: "Seção 1-2: Introdução às Teclas",
+        titulo: "<p>Aula 2</p><p>Seção 1: Introdução às Teclas</p>",
         instrucao: "<p>Agora com a mão direita.</p>",
         conteudo: "çlkjh",
-        aleatorio: false, // Se false, segue a ordem da string 'conteudo'. Se true, sorteia.
+        aleatorio: false,
         metaPontos: 35,
-        tempoLimite: null, // null = sem tempo
+        tempoLimite: null,
         permitirBackspace: false,
         maxErros: 100
     },
-    // ... (Crie as fases intermediárias aqui) ...
-    // Exemplo Fase 15: Aleatório
     {
-        id: 15,
+        id: 3,
         tipo: 'tecla',
-        titulo: "Prática Aleatória",
-        instrucao: "Atenção redobrada. As letras aparecerão em ordem aleatória.",
-        conteudo: "qwertyuiop",
+        titulo: "<p>Aula 3</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p>Voltando para mão esquerda.</p>",
+        conteudo: "qwert",
+        aleatorio: false,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 4,
+        tipo: 'tecla',
+        titulo: "<p>Aula 4</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p>Foco na mão direita.</p>",
+        conteudo: "poiuy",
+        aleatorio: false,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 5,
+        tipo: 'tecla',
+        titulo: "<p>Aula 5</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p>Agora vamos focar no uso das duas mãos.</p>",
+        conteudo: "açsldkfjgh",
         aleatorio: true,
         metaPontos: 35,
         tempoLimite: null,
         permitirBackspace: false,
-        maxErros: 20
+        maxErros: 100
     },
-    // Exemplo Fase 16: Números
+    {
+        id: 6,
+        tipo: 'tecla',
+        titulo: "<p>Aula 6</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "pqowieuryt",
+        aleatorio: true,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 7,
+        tipo: 'tecla',
+        titulo: "<p>Aula 7</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "mznxbcv",
+        aleatorio: true,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 8,
+        tipo: 'tecla',
+        titulo: "<p>Aula 8</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "asdfghjklçzxcvbnm",
+        aleatorio: true,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 9,
+        tipo: 'tecla',
+        titulo: "<p>Aula 9</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "qwertyuiopçzxcvbnm",
+        aleatorio: true,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 10,
+        tipo: 'tecla',
+        titulo: "<p>Aula 10</p><p>Seção 10: Introdução às Teclas</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "asdfghjklçqwertyuiopç",
+        aleatorio: true,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 11,
+        tipo: 'tecla',
+        titulo: "<p>Aula 11</p><p>Seção 1: Introdução às Teclas</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "asdfghjklçqwertyuiopçzxcvbnm",
+        aleatorio: true,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 12,
+        tipo: 'tecla',
+        titulo: "<p>Aula 12</p><p>Seção 1.2: Introdução às Teclas Númericas</p>",
+        instrucao: "",
+        conteudo: "123456789",
+        aleatorio: false,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 13,
+        tipo: 'tecla',
+        titulo: "<p>Aula 13</p><p>Seção 1.2: Introdução às Teclas Númericas</p>",
+        instrucao: "",
+        conteudo: "123456789",
+        aleatorio: true,
+        metaPontos: 36,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 14,
+        tipo: 'tecla',
+        titulo: "<p>Aula 14</p><p>Seção 1.3: Todas as letras e algarismos</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "asdfghjklçqwertyuiopzxcvbnm123456789",
+        aleatorio: true,
+        metaPontos: 70,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 100
+    },
+    {
+        id: 15,
+        tipo: 'tecla',
+        titulo: "<p>Aula 15</p><p>Seção 1.3: Todas as letras e algarismos</p><p>Atenção, agora você não pode errar tanto</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "asdfghjklçqwertyuiopzxcvbnm123456789",
+        aleatorio: true,
+        metaPontos: 35,
+        tempoLimite: null,
+        permitirBackspace: false,
+        maxErros: 10
+    },
     {
         id: 16,
         tipo: 'tecla',
-        titulo: "Números",
-        instrucao: "Use a linha superior para digitar os números.",
-        conteudo: "1234567890",
+        titulo: "<p>Aula 16</p><p>Seção 1.3: Todas as letras e algarismos</p><p>Preste atenção agora você tem um tempo limite</p>",
+        instrucao: "<p style='color:green'>Posicione seus dedos na linha base (ASDF JKLÇ).</p><img src= 'imgs/dedos_teclado_QWERTY.png' alt='Posição dos dedos no teclado QWERTY' style='max-width:100%; height:auto;'>",
+        conteudo: "asdfghjklçqwertyuiopzxcvbnm123456789",
         aleatorio: true,
         metaPontos: 35,
-        maxErros: 20
+        tempoLimite: 240,
+        permitirBackspace: false,
+        maxErros: 10
     },
-
     // --- SEÇÃO 2: PALAVRAS (Fases 17-29) ---
     {
         id: 17,
         tipo: 'palavra',
-        titulo: "Seção 2: Palavras Inteiras",
-        instrucao: "Digite a palavra exibida e pressione ESPAÇO. Não é possível apagar erros ainda.",
+        titulo: "<p>Aula 17</p><p>Seção 2: Palavras Inteiras<p>",
+        instrucao: "<p>Digite a palavra exibida e pressione ESPAÇO. Não é possível apagar ainda.</p>",
         conteudo: ["casa"], // Lista de palavras
         metaPontos: 35, // Tem que acertar 35 palavras
         tempoLimite: 360, // 6 minutos em segundos
-        permitirBackspace: false,
+        permitirBackspace: false, // true = pode apagar
         maxErros: 40,
         teclaFinal: " " // Exige espaço no final
     },
     {
+        id: 18,
+        tipo: 'palavra',
+        titulo: "<p>Aula 18</p><p>Seção 2: Palavras Inteiras<p>",
+        instrucao: "<p>Digite a palavra exibida e pressione <kbd>Espaço</kbd>. Não é possível apagar ainda.</p>",
+        conteudo: ["sede"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 19,
+        tipo: 'palavra',
+        titulo: "<p>Aula 19</p><p>Seção 2: Palavras Inteiras<p>",
+        instrucao: "<p>Digite a palavra exibida e pressione <kbd>Espaço</kbd>. Não é possível apagar ainda.</p>",
+        conteudo: ["fada"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
         id: 20,
         tipo: 'palavra',
-        titulo: "Pontuação",
-        instrucao: "Digite a palavra, agora com pntuação.",
+        titulo: "<p>Aula 20</p><p>Seção 2: Palavras Inteiras<p>",
+        instrucao: "<p>Digite a palavra exibida e pressione <kbd>Espaço</kbd>. Não é possível apagar ainda.</p>",
+        conteudo: ["escada"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 21,
+        tipo: 'palavra',
+        titulo: "<p>Aula 21</p><p>Seção 2.1: Palavras Inteiras, com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
         conteudo: ["moço."],
         metaPontos: 35,
         tempoLimite: 360,
-        permitirBackspace: true, // Agora pode apagar
+        permitirBackspace: false,
         maxErros: 40,
-        teclaFinal: " " // Exige Enter no final
+        teclaFinal: " "
     },
-
+    {
+        id: 22,
+        tipo: 'palavra',
+        titulo: "<p>Aula 22</p><p>Seção 2.1: Palavras Inteiras, com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["molho;"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 23,
+        tipo: 'palavra',
+        titulo: "<p>Aula 23</p><p>Seção 2.1: Palavras com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["miolo;"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 24,
+        tipo: 'palavra',
+        titulo: "<p>Aula 24</p><p>Seção 2.1: Palavras com pontuação<p>o",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["corda,"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 25,
+        tipo: 'palavra',
+        titulo: "<p>Aula 25</p><p>Seção 2.1: Palavras com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["pouca,"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 26,
+        tipo: 'palavra',
+        titulo: "<p>Aula 26</p><p>Seção 2.1: Palavras com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["mentira;"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 27,
+        tipo: 'palavra',
+        titulo: "<p>Aula 27</p><p>Seção 2.1: Palavras com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["ladeira;"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 28,
+        tipo: 'palavra',
+        titulo: "<p>Aula 28</p><p>Seção 2.1: Palavras com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["padaria/"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
+    {
+        id: 29,
+        tipo: 'palavra',
+        titulo: "<p>Aula 29</p><p>Seção 2.1: Palavras com pontuação<p>",
+        instrucao: "Digite a palavra, agora com pontuação.",
+        conteudo: ["vaga-lume,"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: false,
+        maxErros: 40,
+        teclaFinal: " "
+    },
     // --- SEÇÃO 3: ACENTOS (Fases 30-40) ---
     {
         id: 30,
         tipo: 'palavra',
-        titulo: "Seção 3: Acentuação",
+        titulo: "<p>Aula 30</p><p>Seção 3: Acentuação<p>",
         instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
-        conteudo: ["vovó", "pão", "maçã", "através", "você"],
+        conteudo: ["cão;"],
         metaPontos: 35,
         tempoLimite: 360,
         permitirBackspace: true,
@@ -91,18 +363,171 @@ const configsFases = [
         teclaFinal: " ",
         ajudaVisual: true // Ativa botão de ajuda
     },
-
+    {
+        id: 31,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["avó."],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 32,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["técnico,"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 33,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["coração?"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 34,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["parabéns;"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 35,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["matéria-prima."],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 36,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["computação"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 37,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["órgão."],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 38,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["contrário"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 39,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["órfão;"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
+    {
+        id: 40,
+        tipo: 'palavra',
+        titulo: "Seção 3: Acentuação",
+        instrucao: "Atenção aos acentos. Use o botão de ajuda se travar.",
+        conteudo: ["gráfico"],
+        metaPontos: 35,
+        tempoLimite: 360,
+        permitirBackspace: true,
+        maxErros: 40,
+        teclaFinal: " ",
+        ajudaVisual: true // Ativa botão de ajuda
+    },
     // --- SEÇÃO 4: DITADO (Fases 41+) ---
     {
         id: 41,
         tipo: 'audio',
         titulo: "Seção 4: Ditado",
         instrucao: "Ouça a palavra e digite-a. Clique no ícone de som para ouvir novamente.",
-        conteudo: ["desenvolvimento", "programação", "javascript", "sucesso"],
-        metaPontos: 10,
+        conteudo: ["flor", "frio", "tela", "sete", "fogo", "tubo", "longo", "rede", "tudo", "jogo", "vida", "bruto", "vinho", "tempo", "praça", "regra", "porta", "queijo", "papel", "zebra", "palha", "sombra", "rasgar", "corpo", "brasil", "porto", "lendo", "marca", "sede", "uva", "leite", "fone", "papel", "zebra", "palha", "sombra", "rasgar", "corpo", "brasil", "porto", "lendo", "marca", "sede", "uva", "leite", "fone", "papel", "zebra"],
+        metaPontos: 48,
         tempoLimite: null,
         permitirBackspace: true,
-        maxErros: 15,
+        maxErros: 8,
+        teclaFinal: " "
+    },
+    {
+        id: 42,
+        tipo: 'audio',
+        titulo: "Seção 4: Ditado",
+        instrucao: "Ouça a palavra e digite-a. Clique no ícone de som para ouvir novamente.",
+        conteudo: ["celular", "garoto", "macaco", "monitor", "sapato", "estrada", "futebol", "maleta", "retrato", "caçada", "abacaxi", "garrafa", "abelha", "transpirar", "furioso", "orgulhoso", "machucado", "solteiro", "forasteiro", "computador", "comunidade", "supermercado", "marionete", "engenheiro", "capacidade"],
+        metaPontos: 25,
+        tempoLimite: null,
+        permitirBackspace: true,
+        maxErros: 8,
+        teclaFinal: " "
+    },
+    {
+        id: 43,
+        tipo: 'audio',
+        titulo: "Seção 4: Ditado",
+        instrucao: "Ouça a palavra e digite-a. Clique no ícone de som para ouvir novamente.",
+        conteudo: ["avó", "verão", "lampião", "amanhã", "cenário", "lâmpada", "remédio", "pânico", "jacaré", "religião", "glândulas", "falsificação", "bêbado", "granada", "milho", "despertar", "relógio", "investimento", "vento", "terra", "macarrão", "enfermeira", "evolução", "ontem", "terno", "esmagar", "amanhecer", "órgão", "observatório", "floresta", "presidente", "cabelo", "humildade", "venezuela", "índio", "lançamento", "céu", "caminhão", "farmácia", "relatividade", "contrato", "escuro", "arame", "teatro"],       metaPontos: 25,
+        metaPontos: 25,
+        tempoLimite: null,
+        permitirBackspace: true,
+        maxErros: 8,
         teclaFinal: " "
     }
 ];
