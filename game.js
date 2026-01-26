@@ -72,7 +72,7 @@ function carregarFase() {
     atualizarRelogio();
 
     // Configura Modal
-    document.getElementById('titulo-fase').innerText = configAtual.titulo;
+    document.getElementById('titulo-fase').innerHTML = configAtual.titulo;
     document.getElementById('texto-instrucao').innerHTML = configAtual.instrucao;
     modalEl.style.display = 'flex';
 
@@ -145,18 +145,32 @@ function prepararNovoItem() {
 
 // --- CONTROLE DE INPUT ---
 inputEl.addEventListener('keydown', (e) => {
-    // Ignora teclas de controle (shift, ctrl, alt, etc) exceto Backspace e Enter
-    if (e.key.length > 1 && e.key !== 'Backspace' && e.key !== 'Enter') return;
+    const teclasBloqueadas = [
+        'Backspace',
+        'Delete',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home', // Opcional
+        'End', // Opcional
+        'Tab' // Opcional
+    ];
 
-    // Bloqueia Backspace se não permitido
-    if (e.key === 'Backspace' && !configAtual.permitirBackspace) {
+    // Ignora teclas de controle exceto as que queremos tratar
+    if (e.key.length > 1 && !teclasBloqueadas.includes(e.key) && e.key !== 'Enter') {
+        return;
+    }
+
+    // Bloqueia apagar e navegação quando não permitido
+    if (!configAtual.permitirBackspace && teclasBloqueadas.includes(e.key)) {
         e.preventDefault();
         return;
     }
 
     // Modo TECLA (caractere único)
     if (configAtual.tipo === 'tecla') {
-        e.preventDefault(); // Impede o caractere de aparecer no input (controle manual)
+        e.preventDefault(); // Controle manual do input
         verificarTeclaUnica(e.key);
     }
 });
