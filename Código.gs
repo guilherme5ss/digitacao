@@ -61,7 +61,7 @@ function handleCadastro(sheet, e) {
     "'"+e.parameter.cpf,  
     e.parameter.email,    
     e.parameter.senha,
-    0 // <--- Nível Inicial (Começa na fase 0/1)
+    1 // <--- Nível Inicial (Começa na fase 0/1)
   ];
 
   sheet.appendRow(newRow);
