@@ -3,58 +3,164 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro</title>
+    <title>Cadastro - Sistema</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="config.js"></script>
+    <style>
+        /* Ajustes específicos para a página de cadastro */
+        body.cadastro-page .background .shape1 {
+            left: auto;
+            right: -150px;
+            top: -80px;
+            animation: floatReverse 6s ease-in-out infinite;
+        }
+
+        body.cadastro-page .background .shape2 {
+            left: -80px;
+            right: auto;
+            bottom: -200px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Animação de flutuação reversa para o shape1 */
+        @keyframes floatReverse {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(20px) scale(1.05);
+            }
+        }
+
+        /* Transição suave para os shapes (caso haja mudança) */
+        .background .shape {
+            transition: all 1s ease-in-out;
+        }
+
+        /* Animação de entrada para o formulário */
+        body.cadastro-page .container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pequeno ajuste responsivo */
+        @media screen and (max-width: 480px) {
+            body.cadastro-page .background .shape1 {
+                right: -50px;
+                top: -50px;
+                width: 150px;
+                height: 150px;
+            }
+            
+            body.cadastro-page .background .shape2 {
+                left: -50px;
+                bottom: -50px;
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
 </head>
-
-<body>
-    <div class="container">
-        <form name="form-cadastro">
-            <h4>Criar Conta</h4>
-            <input type="hidden" name="action" value="cadastro">
-
-            <input type="text" name="nome" placeholder="Nome Completo *" required>
-
-            <input type="text" name="cpf" id="cpf" placeholder="CPF (Opcional)" maxlength="14"
-                oninput="mascaraCPF(this)">
-
-            <input type="email" name="email" placeholder="Email (Opcional)">
-
-            <div class="password-container">
-                <input type="password" name="senha" id="senha" placeholder="Crie uma Senha *" required>
-                <span class="toggle-password" onclick="togglePassword('senha')"><svg width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
-                            fill="currentColor" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M12 3C17.5915 3 22.2898 6.82432 23.6219 12C22.2898 17.1757 17.5915 21 12 21C6.40848 21 1.71018 17.1757 0.378052 12C1.71018 6.82432 6.40848 3 12 3ZM12 19C7.52443 19 3.73132 16.0581 2.45723 12C3.73132 7.94186 7.52443 5 12 5C16.4756 5 20.2687 7.94186 21.5428 12C20.2687 16.0581 16.4756 19 12 19Z"
-                            fill="currentColor" />
-                    </svg></span>
-            </div>
-
-            <div class="password-container" style="margin-top: 10px;">
-                <input type="password" id="confirma_senha" placeholder="Confirme a Senha *" required>
-                <span class="toggle-password" onclick="togglePassword('confirma_senha')"><svg width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
-                            fill="currentColor" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M12 3C17.5915 3 22.2898 6.82432 23.6219 12C22.2898 17.1757 17.5915 21 12 21C6.40848 21 1.71018 17.1757 0.378052 12C1.71018 6.82432 6.40848 3 12 3ZM12 19C7.52443 19 3.73132 16.0581 2.45723 12C3.73132 7.94186 7.52443 5 12 5C16.4756 5 20.2687 7.94186 21.5428 12C20.2687 16.0581 16.4756 19 12 19Z"
-                            fill="currentColor" />
-                    </svg></span>
-            </div>
-
-            <input type="submit" value="Cadastrar" id="bt-cadastrar">
-
-            <p style="margin-top:10px; font-size: 14px;">
-                Já tem conta? <a href="index.html">Faça Login</a>
-            </p>
-        </form>
+<body class="cadastro-page">
+    <!-- Background shapes (agora em posições diferentes) -->
+    <div class="background">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
     </div>
 
+    <div class="container">
+        <form name="form-cadastro">
+            <h2 class="form-title">Criar Conta</h2>
+            
+            <input type="hidden" name="action" value="cadastro">
+
+            <!-- Nome Completo -->
+            <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="text" name="nome" placeholder="Nome Completo" required>
+            </div>
+
+            <!-- CPF -->
+            <div class="input-group">
+                <span class="input-icon">📇</span>
+                <input type="text" name="cpf" id="cpf" placeholder="CPF (Opcional)" maxlength="14"
+                    oninput="mascaraCPF(this)">
+            </div>
+
+            <!-- Email -->
+            <div class="input-group">
+                <span class="input-icon">📧</span>
+                <input type="email" name="email" placeholder="Email (Opcional)">
+            </div>
+
+            <!-- Senha -->
+            <div class="password-container input-group">
+                <span class="input-icon">🔒</span>
+                <input type="password" name="senha" id="senha" placeholder="Crie uma Senha" required>
+                <span class="toggle-password" onclick="togglePassword('senha')">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
+                            fill="currentColor" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 3C17.5915 3 22.2898 6.82432 23.6219 12C22.2898 17.1757 17.5915 21 12 21C6.40848 21 1.71018 17.1757 0.378052 12C1.71018 6.82432 6.40848 3 12 3ZM12 19C7.52443 19 3.73132 16.0581 2.45723 12C3.73132 7.94186 7.52443 5 12 5C16.4756 5 20.2687 7.94186 21.5428 12C20.2687 16.0581 16.4756 19 12 19Z"
+                            fill="currentColor" />
+                    </svg>
+                </span>
+            </div>
+
+            <!-- Confirmar Senha -->
+            <div class="password-container input-group">
+                <span class="input-icon">🔒</span>
+                <input type="password" name="confirma_senha" id="confirma_senha" placeholder="Confirme a Senha" required>
+                <span class="toggle-password" onclick="togglePassword('confirma_senha')">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
+                            fill="currentColor" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 3C17.5915 3 22.2898 6.82432 23.6219 12C22.2898 17.1757 17.5915 21 12 21C6.40848 21 1.71018 17.1757 0.378052 12C1.71018 6.82432 6.40848 3 12 3ZM12 19C7.52443 19 3.73132 16.0581 2.45723 12C3.73132 7.94186 7.52443 5 12 5C16.4756 5 20.2687 7.94186 21.5428 12C20.2687 16.0581 16.4756 19 12 19Z"
+                            fill="currentColor" />
+                    </svg>
+                </span>
+            </div>
+
+            <!-- Botão de cadastro -->
+            <button type="submit" class="btn-login" id="bt-cadastrar">
+                <span class="btn-text">
+                    <span>Cadastrar</span>
+                    <span>✓</span>
+                </span>
+            </button>
+
+            <!-- Área de mensagens -->
+            <div id="message-area" class="offline-box" style="display: none; margin-top: 20px;">
+                <div class="offline-icon">📝</div>
+                <p id="message-text"></p>
+            </div>
+
+            <!-- Divisor -->
+            <div class="divider">
+                <span></span>
+                <span class="divider-text">ou</span>
+                <span></span>
+            </div>
+
+            <!-- Link de login -->
+            <div class="register-link">
+                <p>Já tem conta? <a href="index.html">Faça Login</a></p>
+            </div>
+        </form>
+    </div>
     <script>
         // --- Função da Máscara de CPF ---
         function mascaraCPF(i) {

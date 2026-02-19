@@ -3,44 +3,77 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Login - Sistema</title>
     <link rel="stylesheet" href="styles.css">
     <script src="config.js"></script>
 </head>
 
 <body>
+    <!-- Background shapes do CSS -->
+    <div class="background">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+    </div>
+
     <div class="container">
         <form name="form-login">
-            <h4>Acessar Sistema</h4>
+            <h2 class="form-title">Acessar Sistema</h2>
+
             <input type="hidden" name="action" value="login">
 
-            <input type="text" name="loginInput" placeholder="Código, CPF ou Email" required>
+            <!-- Input de usuário com ícone -->
+            <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="text" name="loginInput" placeholder="Código, CPF ou Email" required>
+            </div>
 
-            <div class="password-container">
+            <!-- Container de senha com ícone e botão toggle -->
+            <div class="password-container input-group">
+                <span class="input-icon">🔒</span>
                 <input type="password" name="senha" id="senha-login" placeholder="Sua Senha" required>
-                <span class="toggle-password" onclick="togglePassword('senha-login')"><svg width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <span class="toggle-password" onclick="togglePassword('senha-login')">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
                             fill="currentColor" />
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M12 3C17.5915 3 22.2898 6.82432 23.6219 12C22.2898 17.1757 17.5915 21 12 21C6.40848 21 1.71018 17.1757 0.378052 12C1.71018 6.82432 6.40848 3 12 3ZM12 19C7.52443 19 3.73132 16.0581 2.45723 12C3.73132 7.94186 7.52443 5 12 5C16.4756 5 20.2687 7.94186 21.5428 12C20.2687 16.0581 16.4756 19 12 19Z"
                             fill="currentColor" />
-                    </svg></span>
+                    </svg>
+                </span>
             </div>
 
-            <input type="submit" value="Entrar" id="bt-login">
+            <!-- Botão de login -->
+            <button type="submit" class="btn-login" id="bt-login">
+                <span class="btn-text">
+                    <span>Entrar</span>
+                    <span>→</span>
+                </span>
+            </button>
 
-            <div id="offline-area" class="offline-box">
+            <!-- Área offline -->
+            <div id="offline-area" class="offline-box" style="display: none;">
+                <div class="offline-icon">📡</div>
                 <p><strong>Sem conexão com o servidor.</strong></p>
-                <p style="font-size: 13px;">Deseja acessar o sistema em modo limitado?</p>
-                <p style="font-size: 12px;">Seu progresso não será salvo.</p>
-                <button type="button" class="btn-offline" onclick="entrarOffline()">Entrar Offline</button>
+                <p class="offline-text">Deseja acessar o sistema em modo limitado?</p>
+                <p class="offline-note">Seu progresso não será salvo.</p>
+                <button type="button" class="btn-offline" onclick="entrarOffline()">
+                    <span>Entrar Offline</span>
+                    <span>↺</span>
+                </button>
             </div>
 
-            <p style="margin-top:10px; font-size: 14px;">
-                Não tem conta? <a href="cadastro.html">Cadastre-se</a>
-            </p>
+            <!-- Divisor -->
+            <div class="divider">
+                <span></span>
+                <span class="divider-text">ou</span>
+                <span></span>
+            </div>
+
+            <!-- Link de cadastro -->
+            <div class="register-link">
+                <p>Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+            </div>
         </form>
     </div>
 
@@ -49,6 +82,12 @@
             const input = document.getElementById(fieldId);
             const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
             input.setAttribute('type', type);
+
+            // Opcional: alterar o ícone do olho (aberto/fechado)
+            const line = document.querySelector('.password-hidden-line');
+            if (line) {
+                line.style.display = type === 'password' ? 'none' : 'block';
+            }
         }
 
         // Função para simular Timeout (se demorar mais de 5s, gera erro)
@@ -76,11 +115,29 @@
             offlineArea.style.display = 'none';
 
             const botao = document.getElementById('bt-login');
-            botao.value = "Conectando...";
+            const btnText = botao.querySelector('.btn-text');
+            const originalText = btnText.innerHTML;
+
+            // Altera o botão para estado de loading
             botao.disabled = true;
+            btnText.innerHTML = '<span>Conectando...</span><span class="btn-loader">⏳</span>';
+
+            // Verifica se config.script_url existe
+            if (typeof config === 'undefined' || !config.script_url) {
+                console.error('Configuração não encontrada. Usando modo offline para teste.');
+                setTimeout(() => {
+                    offlineArea.style.display = 'block';
+                    botao.disabled = false;
+                    btnText.innerHTML = originalText;
+                }, 2000);
+                return;
+            }
 
             // Usa a função com timeout de 5 segundos
-            fetch(config.script_url, { method: 'POST', body: new FormData(formLogin) })
+            fetch(config.script_url, {
+                method: 'POST',
+                body: new FormData(formLogin)
+            })
                 .then(response => response.json())
                 .then(data => {
                     console.log("Resposta do Servidor:", data); // VEJA ISSO NO CONSOLE
@@ -91,7 +148,7 @@
                         localStorage.setItem('usuarioCodigo', data.codigo);
 
                         // 2. Lógica Robusta de Nível
-                        let nivelServidor = parseInt(data.nivel-1);
+                        let nivelServidor = parseInt(data.nivel - 1);
                         let nivelLocal = parseInt(localStorage.getItem('nivelDigita'));
 
                         // Se for NaN (Not a Number), transforma em 0
@@ -100,9 +157,9 @@
 
                         console.log(`Comparando -> Servidor: ${nivelServidor} | Local: ${nivelLocal}`);
 
-                        //const maiorNivel = Math.max(nivelLocal, nivelServidor); // Usa o maior valor encontrado
-                        const maiorNivel = nivelServidor // Prioriza o nível do servidor sempre
-                        
+                        // Prioriza o nível do servidor sempre
+                        const maiorNivel = nivelServidor;
+
                         // Força o salvamento como string
                         localStorage.setItem('nivelDigita', maiorNivel.toString());
                         console.log("Nível final salvo no navegador:", maiorNivel);
@@ -115,16 +172,16 @@
                         }, 100);
 
                     } else {
-                        alert(data.message);
+                        alert(data.message || 'Erro ao fazer login');
                     }
                 })
                 .catch(error => {
                     console.error('Erro de conexão:', error);
-                    document.getElementById('offline-area').style.display = 'block';
+                    offlineArea.style.display = 'block';
                 })
                 .finally(() => {
-                    botao.value = "Entrar";
                     botao.disabled = false;
+                    btnText.innerHTML = originalText;
                 });
         });
 
@@ -132,8 +189,25 @@
         function entrarOffline() {
             localStorage.setItem('usuarioNome', 'Visitante Offline');
             localStorage.setItem('modoOffline', 'true'); // Marca que está offline
+            localStorage.setItem('nivelDigita', '0'); // Nível básico para offline
             window.location.href = "aula.html";
         }
+
+        // Esconde a área offline inicialmente
+        document.addEventListener('DOMContentLoaded', function () {
+            offlineArea.style.display = 'none';
+
+            // Adiciona efeito de hover nos ícones
+            const inputs = document.querySelectorAll('.input-group input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function () {
+                    this.closest('.input-group').classList.add('focused');
+                });
+                input.addEventListener('blur', function () {
+                    this.closest('.input-group').classList.remove('focused');
+                });
+            });
+        });
     </script>
 </body>
 
