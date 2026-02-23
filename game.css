@@ -1,17 +1,17 @@
 kbd {
-  background-color: #eeeeee;
-  border-radius: 3px;
-  border: 1px solid #b4b4b4;
-  box-shadow:
-    0 1px 1px rgb(0 0 0 / 0.2),
-    0 2px 0 0 rgb(255 255 255 / 0.7) inset;
-  color: #333333;
-  display: inline-block;
-  font-size: 0.85em;
-  font-weight: bold;
-  line-height: 1;
-  padding: 2px 4px;
-  white-space: nowrap;
+    background-color: #eeeeee;
+    border-radius: 3px;
+    border: 1px solid #b4b4b4;
+    box-shadow:
+        0 1px 1px rgb(0 0 0 / 0.2),
+        0 2px 0 0 rgb(255 255 255 / 0.7) inset;
+    color: #333333;
+    display: inline-block;
+    font-size: 0.85em;
+    font-weight: bold;
+    line-height: 1;
+    padding: 2px 4px;
+    white-space: nowrap;
 }
 
 .game-container {
@@ -29,6 +29,7 @@ kbd {
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
+    min-width: 600px;
 }
 
 .display-box {
@@ -62,9 +63,9 @@ kbd {
 
 /* Teclado Virtual */
 .keyboard {
-    margin-top: 30px;
+    margin-top: 20px;
     background: #eee;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     text-align: center;
     user-select: none;
@@ -103,6 +104,53 @@ kbd {
     background-color: #ccc;
     /* Feedback visual quando usuário aperta */
 }
+
+/* Ajustes para o novo layout com mãos e linha de números */
+.keyboard-container {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0;                   /* removemos o gap para controle fino */
+}
+
+.mao {
+    flex: 0 0 auto;
+    width: 400px;             /* tamanho fixo */
+}
+
+.mao svg {
+    width: 100%;
+    height: auto;
+}
+
+/* Ajusta o wrapper do teclado para que não seja escondido completamente */
+.keyboard-wrapper {
+    flex: 0 1 auto;
+    min-width: 570px;         /* impede o teclado de encolher demais */
+}
+
+
+/* Ajuste para a linha de números */
+.key-row.number-row .key {
+    min-width: 40px;
+}
+
+/* Mantém a mão indicadora abaixo do teclado */
+#mao-indicadora {
+    text-align: center;
+    margin-top: 0px;
+}
+
+.mao.esquerda {
+    margin-right: -65px;      /* sobrepõe o teclado pela esquerda */
+    transform: scaleX(-1)rotate(-25deg);
+}
+
+.mao.direita {
+    margin-left: -65px;       /* sobrepõe o teclado pela direita */
+    transform: rotate(-25deg);
+}
+
 
 /* Modal */
 .modal-overlay {

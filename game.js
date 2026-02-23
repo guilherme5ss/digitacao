@@ -13,6 +13,7 @@ const inputEl = document.getElementById('input-usuario');
 const alvoEl = document.getElementById('texto-alvo');
 const modalEl = document.getElementById('modal-instrucao');
 const btnAudio = document.getElementById('btn-audio');
+const containerTeclado = document.querySelector('.keyboard-container');
 
 // --- INICIALIZAÇÃO ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -124,6 +125,8 @@ function prepararNovoItem() {
         alvoEl.innerText = itemAtual;
         destacarTecla(itemAtual);
         btnAudio.style.display = 'none';
+        containerTeclado.style.display = "flex"; // Exibe o teclado visual para tecla
+
 
     } else if (configAtual.tipo === 'palavra' || configAtual.tipo === 'audio') {
         // Sorteia uma palavra da lista
@@ -268,6 +271,113 @@ function finalizarFase(sucesso, mensagem) {
 }
 
 // --- AUXILIARES ---
+const mapaDestaqueMaos = {
+    'q': { svg: '#svg-mao-esquerda', x: 483, y: 240 },
+    'a': { svg: '#svg-mao-esquerda', x: 483, y: 240 },
+    'z': { svg: '#svg-mao-esquerda', x: 483, y: 240 },
+    'w': { svg: '#svg-mao-esquerda', x: 395, y: 130 },
+    's': { svg: '#svg-mao-esquerda', x: 395, y: 130 },
+    'x': { svg: '#svg-mao-esquerda', x: 395, y: 130 },
+    'e': { svg: '#svg-mao-esquerda', x: 302, y: 73 },
+    'd': { svg: '#svg-mao-esquerda', x: 302, y: 73 },
+    'c': { svg: '#svg-mao-esquerda', x: 302, y: 73 },
+    'f': { svg: '#svg-mao-esquerda', x: 185, y: 123 },
+    'g': { svg: '#svg-mao-esquerda', x: 185, y: 123 },
+    'r': { svg: '#svg-mao-esquerda', x: 185, y: 123 },
+    't': { svg: '#svg-mao-esquerda', x: 185, y: 123 },
+    'v': { svg: '#svg-mao-esquerda', x: 185, y: 123 },
+    'b': { svg: '#svg-mao-esquerda', x: 185, y: 123 },
+    // Mão direita (ajuste as coordenadas conforme necessário)
+    'y': { svg: '#svg-mao-direita', x: 185, y: 123 },
+    'u': { svg: '#svg-mao-direita', x: 185, y: 123 },
+    'i': { svg: '#svg-mao-direita', x: 302, y: 73 },
+    'o': { svg: '#svg-mao-direita', x: 395, y: 130 },
+    'p': { svg: '#svg-mao-direita', x: 483, y: 240 },
+    'ç': { svg: '#svg-mao-direita', x: 483, y: 240 },
+    'h': { svg: '#svg-mao-direita', x: 185, y: 123 },
+    'j': { svg: '#svg-mao-direita', x: 185, y: 123 },
+    'k': { svg: '#svg-mao-direita', x: 302, y: 73 },
+    'l': { svg: '#svg-mao-direita', x: 395, y: 130 },
+    'n': { svg: '#svg-mao-direita', x: 185, y: 123 },
+    'm': { svg: '#svg-mao-direita', x: 302, y: 73 },
+    ' ': { svg: '#svg-mao-direita', x: 76, y: 366 } // polegar, ajuste
+};
+
+const DestaqueSVG = (function () {
+    let destaqueAtual = null;
+
+    function destacar({ svg, x, y, raio = 10, cor = '#ff3b3b', duracao = 1 }) {
+        limpar();
+
+        const svgEl = typeof svg === 'string'
+            ? document.querySelector(svg)
+            : svg;
+
+        if (!svgEl || !(svgEl instanceof SVGElement)) {
+            console.error('SVG não encontrado');
+            return;
+        }
+
+        const ns = 'http://www.w3.org/2000/svg';
+
+        const grupo = document.createElementNS(ns, 'g');
+        grupo.setAttribute('class', 'destaque-onda-continua');
+
+        // Criar um único círculo com animação contínua
+        const circulo = document.createElementNS(ns, 'circle');
+        circulo.setAttribute('cx', x);
+        circulo.setAttribute('cy', y);
+        circulo.setAttribute('r', raio);
+        circulo.setAttribute('fill', 'none');
+        circulo.setAttribute('stroke', cor);
+        circulo.setAttribute('stroke-width', '2');
+        circulo.setAttribute('opacity', '0');
+
+        // Animação complexa de onda
+        const animScale = document.createElementNS(ns, 'animate');
+        animScale.setAttribute('attributeName', 'r');
+        animScale.setAttribute('values', `${raio};${raio * 5}`);
+        animScale.setAttribute('dur', `${duracao}s`);
+        animScale.setAttribute('repeatCount', 'indefinite');
+        animScale.setAttribute('keyTimes', '0;1');
+
+        const animOpacity = document.createElementNS(ns, 'animate');
+        animOpacity.setAttribute('attributeName', 'opacity');
+        animOpacity.setAttribute('values', '0.7;0.7;0');
+        animOpacity.setAttribute('keyTimes', '0;0.3;1');
+        animOpacity.setAttribute('dur', `${duracao}s`);
+        animOpacity.setAttribute('repeatCount', 'indefinite');
+
+        const animStrokeWidth = document.createElementNS(ns, 'animate');
+        animStrokeWidth.setAttribute('attributeName', 'stroke-width');
+        animStrokeWidth.setAttribute('values', '3;3;0');
+        animStrokeWidth.setAttribute('keyTimes', '0;0.5;1');
+        animStrokeWidth.setAttribute('dur', `${duracao}s`);
+        animStrokeWidth.setAttribute('repeatCount', 'indefinite');
+
+        circulo.appendChild(animScale);
+        circulo.appendChild(animOpacity);
+        circulo.appendChild(animStrokeWidth);
+        grupo.appendChild(circulo);
+
+        svgEl.appendChild(grupo);
+
+        destaqueAtual = grupo;
+        console.log('Onda contínua criada no ponto:', x, y);
+    }
+
+    function limpar() {
+        if (destaqueAtual) {
+            destaqueAtual.remove();
+            destaqueAtual = null;
+        }
+
+        // Remover todos os destaques anteriores
+        document.querySelectorAll('.destaque').forEach(el => el.remove());
+    }
+
+    return { destacar, limpar };
+})();
 
 function destacarTecla(char) {
     // Remove destaque anterior
@@ -281,18 +391,34 @@ function destacarTecla(char) {
 
         // Sugerir dedo (lógica simples baseada em layout QWERTY padrão)
         const dedos = {
-            'q': 'Mindinho Esq', 'a': 'Mindinho Esq', 'z': 'Mindinho Esq',
-            'w': 'Anelar Esq', 's': 'Anelar Esq', 'x': 'Anelar Esq',
-            'e': 'Médio Esq', 'd': 'Médio Esq', 'c': 'Médio Esq',
-            'f': 'Indicador Esq', 'g': 'Indicador Esq', 'r': 'Indicador Esq', 't': 'Indicador Esq', 'v': 'Indicador Esq', 'b': 'Indicador Esq',
-            'j': 'Indicador Dir', 'h': 'Indicador Dir', 'u': 'Indicador Dir', 'y': 'Indicador Dir', 'm': 'Indicador Dir', 'n': 'Indicador Dir',
-            'k': 'Médio Dir', 'i': 'Médio Dir', ',': 'Médio Dir',
-            'l': 'Anelar Dir', 'o': 'Anelar Dir', '.': 'Anelar Dir',
-            'ç': 'Mindinho Dir', 'p': 'Mindinho Dir',
+            'q': 'Mindinho Esqquerdo', 'a': 'Mindinho Esqquerdo', 'z': 'Mindinho Esqquerdo',
+            'w': 'Anelar Esqquerdo', 's': 'Anelar Esqquerdo', 'x': 'Anelar Esqquerdo',
+            'e': 'Médio Esqquerdo', 'd': 'Médio Esqquerdo', 'c': 'Médio Esqquerdo',
+            'f': 'Indicador Esqquerdo', 'g': 'Indicador Esqquerdo', 'r': 'Indicador Esqquerdo', 't': 'Indicador Esqquerdo', 'v': 'Indicador Esqquerdo', 'b': 'Indicador Esqquerdo',
+            'j': 'Indicador Direito', 'h': 'Indicador Direito', 'u': 'Indicador Direito', 'y': 'Indicador Direito', 'm': 'Indicador Direito', 'n': 'Indicador Direito',
+            'k': 'Médio Direito', 'i': 'Médio Direito', ',': 'Médio Direito',
+            'l': 'Anelar Direito', 'o': 'Anelar Direito', '.': 'Anelar Direito',
+            'ç': 'Mindinho Direito', 'p': 'Mindinho Direito',
             ' ': 'Polegar'
         };
         const dedo = dedos[char.toLowerCase()] || "Indicador/Mindinho";
         document.getElementById('nome-dedo').innerText = dedo;
+    }
+
+    // Limpa qualquer destaque anterior nas mãos
+    DestaqueSVG.limpar();
+
+    // Obtém as informações do mapa (crie este objeto com todas as teclas)
+    const info = mapaDestaqueMaos[char.toLowerCase()];
+    if (info) {
+        DestaqueSVG.destacar({
+            svg: info.svg,
+            x: info.x,
+            y: info.y,
+            cor: '#ff3b3b',   // cor padrão
+            raio: 12,          // ajustável
+            duracao: 1.5       // duração da animação
+        });
     }
 }
 
@@ -349,7 +475,7 @@ function salvarProgressoServidor(novoNivel) {
     const formData = new FormData();
     formData.append('action', 'salvarProgresso');
     formData.append('codigo', codigoUsuario);
-    formData.append('nivel', novoNivel+1);
+    formData.append('nivel', novoNivel + 1);
 
     // Envia silenciosamente (sem travar o jogo)
     fetch(config.script_url, { // Certifique-se que config.script_url está acessível aqui (inclua config.js no html antes do game.js)
