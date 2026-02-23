@@ -23,9 +23,12 @@
 
         /* Animação de flutuação reversa para o shape1 */
         @keyframes floatReverse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0) scale(1);
             }
+
             50% {
                 transform: translateY(20px) scale(1.05);
             }
@@ -46,6 +49,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -60,7 +64,7 @@
                 width: 150px;
                 height: 150px;
             }
-            
+
             body.cadastro-page .background .shape2 {
                 left: -50px;
                 bottom: -50px;
@@ -70,8 +74,9 @@
         }
     </style>
     <!-- Favicon -->
-  <link rel="icon" href="https://api.imlabs.com.br/platforms/1/images/favicon/favicon.ico">
+    <link rel="icon" href="https://api.imlabs.com.br/platforms/1/images/favicon/favicon.ico">
 </head>
+
 <body class="cadastro-page">
     <!-- Background shapes (agora em posições diferentes) -->
     <div class="background">
@@ -82,7 +87,7 @@
     <div class="container">
         <form name="form-cadastro">
             <h2 class="form-title">Cadastro</h2>
-            
+
             <input type="hidden" name="action" value="cadastro">
 
             <!-- Nome Completo -->
@@ -123,7 +128,8 @@
             <!-- Confirmar Senha -->
             <div class="password-container input-group">
                 <span class="input-icon">🔒</span>
-                <input type="password" name="confirma_senha" id="confirma_senha" placeholder="Confirme a Senha" required>
+                <input type="password" name="confirma_senha" id="confirma_senha" placeholder="Confirme a Senha"
+                    required>
                 <span class="toggle-password" onclick="togglePassword('confirma_senha')">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
