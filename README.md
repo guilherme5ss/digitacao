@@ -7,9 +7,7 @@ Práticas de digitação.
 
 ### **1. Configuração Inicial:**
 
-- Na planilha, a primeira linha **deve** conter os cabeçalhos com os mesmos nomes dos atributos `name` do seu HTML.
-
-- Crie colunas na linha 1 com os nomes exatos: `nome` | `email` | `mensagem` | `data`.
+- Crie colunas na linha 1 com os nomes: `Data` | `Código` | `Nome` | `E-mail` | `Senha` | `Nível`.
 
 - Execute a função `initialSetup`: No editor do Apps Script, selecione a função `initialSetup` na barra superior e clique em "Executar" (Run) uma única vez. Isso salva o ID da planilha nas propriedades do script.
 
