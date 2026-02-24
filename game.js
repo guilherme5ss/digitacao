@@ -14,6 +14,12 @@ const alvoEl = document.getElementById('texto-alvo');
 const modalEl = document.getElementById('modal-instrucao');
 const btnAudio = document.getElementById('btn-audio');
 const containerTeclado = document.querySelector('.keyboard-container');
+const input = document.getElementById('input-usuario');
+
+input.addEventListener('blur', () => {
+    // Pequeno timeout para permitir que o clique em outro elemento aconteça
+    setTimeout(() => input.focus(), 10);
+});
 
 // --- INICIALIZAÇÃO ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -132,7 +138,8 @@ function prepararNovoItem() {
         // Sorteia uma palavra da lista
         const index = Math.floor(Math.random() * conteudo.length);
         itemAtual = conteudo[index];
-
+        containerTeclado.style.display = "none"; // Esconde o teclado visual para palavra/áudio
+        
         if (configAtual.tipo === 'audio') {
             alvoEl.innerText = "🔊 ???";
             btnAudio.style.display = 'inline-block';
