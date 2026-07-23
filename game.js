@@ -398,11 +398,13 @@ function destacarTecla(char) {
 
         // Sugerir dedo (lógica simples baseada em layout QWERTY padrão)
         const dedos = {
-            'q': 'Mindinho Esqquerdo', 'a': 'Mindinho Esqquerdo', 'z': 'Mindinho Esqquerdo',
-            'w': 'Anelar Esqquerdo', 's': 'Anelar Esqquerdo', 'x': 'Anelar Esqquerdo',
-            'e': 'Médio Esqquerdo', 'd': 'Médio Esqquerdo', 'c': 'Médio Esqquerdo',
-            'f': 'Indicador Esqquerdo', 'g': 'Indicador Esqquerdo', 'r': 'Indicador Esqquerdo', 't': 'Indicador Esqquerdo', 'v': 'Indicador Esqquerdo', 'b': 'Indicador Esqquerdo',
-            'j': 'Indicador Direito', 'h': 'Indicador Direito', 'u': 'Indicador Direito', 'y': 'Indicador Direito', 'm': 'Indicador Direito', 'n': 'Indicador Direito',
+            'q': 'Mindinho Esquerdo', 'a': 'Mindinho Esquerdo', 'z': 'Mindinho Esquerdo',
+            'w': 'Anelar Esquerdo', 's': 'Anelar Esquerdo', 'x': 'Anelar Esquerdo',
+            'e': 'Médio Esquerdo', 'd': 'Médio Esquerdo', 'c': 'Médio Esquerdo',
+            'f': 'Indicador Esquerdo', 'g': 'Indicador Esquerdo', 'r': 'Indicador Esquerdo',
+            't': 'Indicador Esquerdo', 'v': 'Indicador Esquerdo', 'b': 'Indicador Esquerdo',
+            'j': 'Indicador Direito', 'h': 'Indicador Direito', 'u': 'Indicador Direito',
+            'y': 'Indicador Direito', 'm': 'Indicador Direito', 'n': 'Indicador Direito',
             'k': 'Médio Direito', 'i': 'Médio Direito', ',': 'Médio Direito',
             'l': 'Anelar Direito', 'o': 'Anelar Direito', '.': 'Anelar Direito',
             'ç': 'Mindinho Direito', 'p': 'Mindinho Direito',

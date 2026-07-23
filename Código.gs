@@ -1,5 +1,5 @@
 const scriptProp = PropertiesService.getScriptProperties();
-const sheetName = "MAIN";
+const sheetName = "Usuários";
 
 function initialSetup() {
   const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
@@ -73,9 +73,10 @@ function handleCadastro(sheet, e) {
   const cpfFormatado = formatarCPF(e.parameter.cpf);
   const senhaFormatada = e.parameter.senha ? "'" + e.parameter.senha.toString() : "";
   const cpfParaPlanilha = cpfFormatado ? "'" + cpfFormatado : ""; // Adiciona apóstrofo para manter zeros
+  const dataFormatada = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "dd/MM/yyyy HH:mm:ss");
 
   const newRow = [
-    new Date(), // A - Data do cadastro
+    dataFormatada, // A - Data do cadastro
     nextId, // B - Código (ID)
     nomeFormatado, // C - Nome em maiúsculas
     cpfParaPlanilha, // D - CPF (apenas números, com apóstrofo para zeros)
